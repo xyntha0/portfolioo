@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Courier New', Courier, monospace;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-color: #000;
+  color: #22c55e;
+}
+
+input::placeholder {
+  color: #22c55e;
+  opacity: 0.5;
+}
+
+pre {
+  font-family: 'Courier New', Courier, monospace;
+}
