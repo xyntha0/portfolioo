@@ -5,12 +5,12 @@ const { stdin: input, stdout: output } = require('node:process');
 const rl = readline.createInterface({ input, output });
 const prompt = '$ ';
 
-// Display the prompt
+
 function showPrompt() {
   process.stdout.write(prompt);
 }
 
-// Execute a command
+
 function executeCommand(command) {
   if (command.trim() === '') {
     showPrompt();
@@ -36,7 +36,7 @@ function executeCommand(command) {
   });
 }
 
-// Start the shell
+
 console.log('Simple Node.js Shell (Type "exit" to quit)');
 showPrompt();
 
