@@ -108,9 +108,8 @@ Mohammed VI Polytechnic University (UM6P)
 
 Focus Areas:
 • Cybersecurity & Ethical Hacking
-• Software Development & System Architecture
+• System Architecture
 • Data Structures & Algorithms
-• AI & Machine Learning
 • Computer Networks & Cloud Computing
 
 Professional Certificate in Cybersecurity (In Progress)
@@ -209,3 +208,4 @@ IT Support Technician | Freelance
 }
 
 export default App;
+
