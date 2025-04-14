@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TypeAnimation } from 'react-type-animation';
 
 function App() {
@@ -10,27 +10,32 @@ function App() {
     {
       title: "Simple Keylogger",
       description: "A basic keylogger program in Python that records and logs keystrokes. Created for educational purposes to understand keylogging mechanics.",
-      tech: ["Python", "System Programming"]
+      tech: ["Python", "System Programming"],
+      link: "https://github.com/xyntha0/simple-keylogger"
     },
     {
       title: "Art Of Code",
       description: "Python tool that converts images into ASCII art, saving results as PNG and plain text. Compatible with terminal displays and text editors.",
-      tech: ["Python", "Image Processing"]
+      tech: ["Python", "Image Processing"],
+      link: "https://github.com/xyntha0/art-of-code"
     },
     {
       title: "Ethical Hacking With Scripts",
       description: "Collection of automation scripts for penetration testing and vulnerability assessment.",
-      tech: ["Python", "Bash", "Security Tools"]
+      tech: ["Python", "Bash", "Security Tools"],
+      link: "https://github.com/xyntha0/hacking-scripts"
     },
     {
       title: "Bash Commons",
       description: "Reusable Bash functions for common tasks including logging, assertions, and string manipulation.",
-      tech: ["Bash", "Testing"]
+      tech: ["Bash", "Testing"],
+      link: "https://github.com/xyntha0/bash-commons"
     },
     {
       title: "Toolkit-By-Cpp",
       description: "Security toolkit including login, cipher, and hash functions implemented in C++.",
-      tech: ["C++", "Cryptography"]
+      tech: ["C++", "Cryptography"],
+      link: "https://github.com/xyntha0/toolkit-by-cpp"
     }
   ];
 
@@ -91,6 +96,7 @@ ${project.title}
 ${'-'.repeat(project.title.length)}
 ${project.description}
 Tech: ${project.tech.join(', ')}
+Repo: ${project.link}
 `).join('\n');
         break;
       case 'education':
@@ -106,20 +112,33 @@ Focus Areas:
 • Data Structures & Algorithms
 • AI & Machine Learning
 • Computer Networks & Cloud Computing
+
+Professional Certificate in Cybersecurity (In Progress)
+Google / Coursera / UM6P / Morocco Digital Academy
+
+42 School – Benguerir | 42 Network
+• Systems programming, network fundamentals, and peer-based learning
+• Projects in C, shell scripting, and system security
 `;
         break;
       case 'experience':
         output = `
 Professional Experience:
 ----------------------
-Cybersecurity Engineer | Red Team Specialist
-June 2023 - Present
+Security Analyst Intern | CyberShield Solutions (Remote)
+Jan 2025 – Mar 2025
+- Conducted vulnerability assessments using Nmap and Wireshark
+- Assisted in compliance auditing and mitigation planning
 
-• Conducted penetration testing and vulnerability assessments
-• Developed automation scripts for ethical hacking
-• Participated in CTF challenges
-• Researched memory manipulation techniques
-• Assisted in incident response and forensic investigations
+Cybersecurity Assistant | AtlasTech IT Services, Rabat
+Sep 2024 – Dec 2024
+- Monitored networks with SIEM tools
+- Helped implement MFA and endpoint security
+
+IT Support Technician | Freelance
+2023 – 2024
+- Diagnosed and resolved user-level security issues
+- Implemented antivirus and access control solutions
 `;
         break;
       case 'clear':
@@ -128,7 +147,7 @@ June 2023 - Present
       default:
         output = `Command not found: ${command}. Type 'help' for available commands.`;
     }
-    
+
     setCommandHistory([...commandHistory, { command: cmd, output }]);
   };
 
