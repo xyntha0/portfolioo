@@ -1,10 +1,37 @@
-import React, { useState } from 'react';
+
+
+
+import React, { useState, useEffect , useRef} from 'react';
+
 import { TypeAnimation } from 'react-type-animation';
 
 function App() {
   const [currentDirectory, setCurrentDirectory] = useState('~');
   const [commandHistory, setCommandHistory] = useState([]);
   const [inputValue, setInputValue] = useState('');
+  const bottomRef = useRef(null);
+  const [historyIndex, setHistoryIndex] = useState(null);
+  const inputRef = React.useRef(null);
+
+  useEffect(() => {
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [commandHistory]);
+
+
+ 
+  const availableCommands = [
+    { name: 'help', desc: 'Show this help message' },
+    { name: 'about', desc: 'Learn about me' },
+    { name: 'skills', desc: 'View my technical skills' },
+    { name: 'projects', desc: 'List my projects' },
+    { name: 'education', desc: 'View my education' },
+    { name: 'experience', desc: 'View my work experience' },
+    { name: 'clear', desc: 'Clear the terminal' }
+  ];
+  
+  
 
   const projects = [
     {
@@ -187,6 +214,8 @@ IT Support Technician | Freelance
               <pre className="whitespace-pre-wrap">{item.output}</pre>
             </div>
           ))}
+
+          <div ref={bottomRef} />
         </div>
 
         <form onSubmit={handleSubmit} className="mt-4 flex items-center">
@@ -195,12 +224,58 @@ IT Support Technician | Freelance
           <span className="text-purple-500">{currentDirectory}</span>
           <span className="text-white">$ </span>
           <input
-            type="text"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="flex-1 ml-1 bg-transparent outline-none border-none"
-            autoFocus
-          />
+          ref={inputRef}
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowUp') {
+              if (commandHistory.length > 0) {
+                const newIndex = historyIndex === null ? commandHistory.length - 1 : Math.max(historyIndex - 1, 0);
+                const previousCmd = commandHistory[newIndex].command;
+                setInputValue(previousCmd);
+                setHistoryIndex(newIndex);
+          
+                // Wait for value to update, then move cursor to the end
+                setTimeout(() => {
+                  inputRef.current?.focus();
+                  inputRef.current?.setSelectionRange(previousCmd.length, previousCmd.length);
+                }, 0);
+              }
+            } else if (e.key === 'ArrowDown') {
+              if (historyIndex !== null) {
+                const newIndex = Math.min(historyIndex + 1, commandHistory.length - 1);
+                const nextCmd = commandHistory[newIndex]?.command || '';
+                setInputValue(nextCmd);
+                setHistoryIndex(newIndex === commandHistory.length - 1 ? null : newIndex);
+          
+                setTimeout(() => {
+                  inputRef.current?.focus();
+                  inputRef.current?.setSelectionRange(nextCmd.length, nextCmd.length);
+                }, 0);
+              }
+            } else if (e.key === 'Tab') {
+              e.preventDefault(); // prevent default tabbing
+
+              const input = inputValue.toLowerCase().trim();
+              const matches = availableCommands.filter(cmd =>
+                cmd.name.startsWith(input)
+              );
+          
+              if (matches.length === 1) {
+                // Auto-complete to the full command
+                setInputValue(matches[0].name);
+              } else if (matches.length > 1) {
+                const output = matches.map(cmd => `${cmd.name.padEnd(12)} - ${cmd.desc}`).join('\n');
+                setCommandHistory([...commandHistory, { command: inputValue, output }]);
+              }
+            } else {
+              setHistoryIndex(null);
+            }
+          }}
+          className="flex-1 ml-1 bg-transparent outline-none border-none"
+          autoFocus
+        />
         </form>
       </div>
     </div>
